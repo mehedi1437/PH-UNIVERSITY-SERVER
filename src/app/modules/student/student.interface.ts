@@ -1,4 +1,5 @@
-// import { Schema, model, connect } from 'mongoose';
+
+import { Types } from "mongoose";
 
 export type Gurdian = {
   fatherName: string;
@@ -16,13 +17,14 @@ export type LocalGurdian = {
 };
 export type UserName = {
   firstName: string;
-  middleName: string;
+  middleName?: string;
   lastName: string;
 };
 export type Student = {
   id: string;
+  user:Types.ObjectId
   name: UserName;
-  gender: "male" | "female";
+  gender: "male" | "female"|"other";
   dateOfBirth?: string;
   email: string;
   avatar?: string;
@@ -34,5 +36,5 @@ export type Student = {
   gurdian: Gurdian;
   localGurdian: LocalGurdian;
   profileImg?: string;
-  isActive: "active" | "block";
+ 
 };

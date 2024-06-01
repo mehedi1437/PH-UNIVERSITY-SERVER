@@ -37,6 +37,7 @@ const localGurdianSchema = new Schema<LocalGurdian>({
 
 const studentSchema = new Schema<Student>({
   id: { type: String ,required:true, unique:true },
+  user:{type:Schema.Types.ObjectId,required:[true,'user id is required'],unique:true,ref:"User" },
   name:{type: userNameSchema,required:true},
   gender: { type: String, enum: {values:["male", "female", "other"],message:'gender is required'}, required: [true,'FGernder lagbei lagbe'] },
   dateOfBirth: { type: String },
@@ -49,7 +50,7 @@ const studentSchema = new Schema<Student>({
   gurdian: {type:gurdianSchema,required:true},
   localGurdian: {type:localGurdianSchema,required:true},
   profileImg: { type: String, required: true },
-  isActive: { type: String, enum: ["active", "block"], default: 'active' },
+  
 });
 
 export const StudentModel = model<Student>('Student', studentSchema);
