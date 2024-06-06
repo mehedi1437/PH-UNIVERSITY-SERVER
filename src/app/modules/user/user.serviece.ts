@@ -14,7 +14,7 @@ const createStudentIntoDB = async (password: string, studentData: Student) => {
   // set student role
   userData.role = "student";
   //set Manually generated password
-  userData.id = "2030100001";
+  userData.id = "2030100002";
 
   // create a user
   const newUser = await User.create(userData);
