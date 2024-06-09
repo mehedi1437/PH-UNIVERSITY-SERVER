@@ -30,31 +30,36 @@ const localGurdianValidationSchema = z.object({
 });
 
 // Define the Student schema
-const studentValidationSchema = z.object({
-  id: z.string().nonempty("ID is required"),
-  name: userNameValidationSchema,
-  gender: z.enum(["male", "female", "other"], {
-    required_error: "Gender is required",
-    invalid_type_error: "Gender must be one of 'male', 'female', or 'other'",
+const createStudentValidationSchema = z.object({
+  body: z.object({
+    student: z.object({
+      name: userNameValidationSchema,
+      gender: z.enum(["male", "female", "other"], {
+        required_error: "Gender is required",
+        invalid_type_error:
+          "Gender must be one of 'male', 'female', or 'other'",
+      }),
+      dateOfBirth: z.string().optional(),
+      email: z
+        .string()
+        .email("Invalid email address")
+        .nonempty("Email is required"),
+      contactNo: z.string().nonempty("Contact number is required"),
+      emergencyContactNo: z
+        .string()
+        .nonempty("Emergency contact number is required"),
+      bloodGroup: z
+        .enum(["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"])
+        .optional(),
+      presentAddress: z.string().nonempty("Present address is required"),
+      permanentAddress: z.string().nonempty("Permanent address is required"),
+      gurdian: gurdianValidationSchema,
+      localGurdian: localGurdianValidationSchema,
+      profileImg: z.string().nonempty("Profile image is required"),
+    }),
   }),
-  dateOfBirth: z.string().optional(),
-  email: z
-    .string()
-    .email("Invalid email address")
-    .nonempty("Email is required"),
-  contactNo: z.string().nonempty("Contact number is required"),
-  emergencyContactNo: z
-    .string()
-    .nonempty("Emergency contact number is required"),
-  bloodGroup: z
-    .enum(["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"])
-    .optional(),
-  presentAddress: z.string().nonempty("Present address is required"),
-  permanentAddress: z.string().nonempty("Permanent address is required"),
-  gurdian: gurdianValidationSchema,
-  localGurdian: localGurdianValidationSchema,
-  profileImg: z.string().nonempty("Profile image is required"),
-  isActive: z.enum(["active", "block"]).default("active"),
 });
 
-export default studentValidationSchema;
+export const studentValidations = {
+   createStudentValidationSchema,
+};
