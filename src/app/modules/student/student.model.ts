@@ -40,7 +40,7 @@ const studentSchema = new Schema<Student>({
   user:{type:Schema.Types.ObjectId,required:[true,'user id is required'],unique:true,ref:"User" },
   name:{type: userNameSchema,required:true},
   gender: { type: String, enum: {values:["male", "female", "other"],message:'gender is required'}, required: [true,'FGernder lagbei lagbe'] },
-  dateOfBirth: { type: String },
+  dateOfBirth: { type: Date },
   email: { type: String, required: true,unique:true },
   contactNo: { type: String, required: true },
   emergencyContactNo: { type: String, required: true },
