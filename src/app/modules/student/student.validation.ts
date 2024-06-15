@@ -55,6 +55,7 @@ const createStudentValidationSchema = z.object({
       permanentAddress: z.string().nonempty("Permanent address is required"),
       gurdian: gurdianValidationSchema,
       localGurdian: localGurdianValidationSchema,
+      admissonSemester: z.string(),
       profileImg: z.string().nonempty("Profile image is required"),
     }),
   }),

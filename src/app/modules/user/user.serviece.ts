@@ -4,6 +4,7 @@ import { Student } from "../student/student.interface";
 import { TUser } from "./user.interface";
 import { User } from "./user.model";
 import { StudentModel } from "../student/student.model";
+import { TAcademicSemester } from "../academicSemester/academicSemester.interface";
 
 const createStudentIntoDB = async (password: string, studentData: Student) => {
   // create a user object
@@ -13,8 +14,21 @@ const createStudentIntoDB = async (password: string, studentData: Student) => {
   userData.password = password || (config.default_pass as string);
   // set student role
   userData.role = "student";
-  //set Manually generated password
-  userData.id = "2030100002";
+
+// Year SemesterCOde $ digit Code
+const geenerateStudentId=(payLoad:TAcademicSemester)=>{
+
+}
+
+
+
+
+
+
+
+
+  //set Auto generated password
+  // userData.id = geenerateStudentId();
 
   // create a user
   const newUser = await User.create(userData);

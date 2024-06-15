@@ -35,6 +35,7 @@ export type Student = {
   permanentAddress: string;
   gurdian: Gurdian;
   localGurdian: LocalGurdian;
+  admissonSemester:Types.ObjectId;
   profileImg?: string;
  
 };

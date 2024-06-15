@@ -49,6 +49,7 @@ const studentSchema = new Schema<Student>({
   permanentAddress: { type: String, required: true },
   gurdian: {type:gurdianSchema,required:true},
   localGurdian: {type:localGurdianSchema,required:true},
+  admissonSemester:{type:Schema.Types.ObjectId,required:[true,'Admisson Semester required'],ref:"AcademicSemester"},
   profileImg: { type: String, required: true },
   
 });
