@@ -11,6 +11,14 @@ router.get(
     '/:semesterId',
     academicSemesterControllers.getSingleAcademicSemester,
   );
+  router.patch(
+    '/:semesterId',
+    validateRequest(
+        AcademicsemesterValidation.updateAcademicSemesterValidationSchema,
+    ),
+    academicSemesterControllers.updateAcademicSemester,
+  );
+
 router.get('/', academicSemesterControllers.getAllAcademicSemesters);
 // router.get('/:id',StudentsControllers.getSinglStudent);
 

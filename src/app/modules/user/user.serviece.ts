@@ -4,9 +4,11 @@ import { Student } from "../student/student.interface";
 import { TUser } from "./user.interface";
 import { User } from "./user.model";
 import { StudentModel } from "../student/student.model";
+import { AcademicSemester } from "../academicSemester/academicSemester.model";
+import { generateStudentId } from "./user.utils";
 import { TAcademicSemester } from "../academicSemester/academicSemester.interface";
 
-const createStudentIntoDB = async (password: string, studentData: Student) => {
+const createStudentIntoDB = async (password: string, payLoad: Student) => {
   // create a user object
   const userData: Partial<TUser> = {};
   // if passsword is not given use default password
@@ -15,30 +17,23 @@ const createStudentIntoDB = async (password: string, studentData: Student) => {
   // set student role
   userData.role = "student";
 
-// Year SemesterCOde $ digit Code
-const geenerateStudentId=(payLoad:TAcademicSemester)=>{
-
-}
 
 
-
-
-
-
-
+// Find academic semester Info
+const admissonSemester = await AcademicSemester.findById(payLoad.admissonSemester)
 
   //set Auto generated password
-  // userData.id = geenerateStudentId();
+  userData.id = await generateStudentId(admissonSemester as TAcademicSemester);
 
   // create a user
   const newUser = await User.create(userData);
   //   Create a student
   if (Object.keys(newUser).length) {
     // set id ,_id as  user
-    studentData.id = newUser.id;
-    studentData.user = newUser._id; //reference id
+    payLoad.id = newUser.id;
+    payLoad.user = newUser._id; //reference id
 
-    const newstudent = await StudentModel.create(studentData);
+    const newstudent = await StudentModel.create(payLoad);
     return newstudent;
   }
 };
