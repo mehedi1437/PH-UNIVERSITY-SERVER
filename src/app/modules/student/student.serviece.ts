@@ -8,18 +8,30 @@ import { StudentModel } from "./student.model";
 
 // };
 
-const geAlltStudentaFromDB =async ()=>{
+const geAlltStudentaFromDB = async () => {
+  const result = await StudentModel.find()
+    .populate("admissonSemester")
+    .populate({
+      path: "academicDepartment",
+      populate: {
+        path: "academicFaculty",
+      },
+    });
+  return result;
+};
+const geSingletStudentaFromDB = async (id: string) => {
+  const result = await StudentModel.findById(id)
+    .populate("admissonSemester")
+    .populate({
+      path: "academicDepartment",
+      populate: {
+        path: "academicFaculty",
+      },
+    });
+  return result;
+};
 
-    const result = await StudentModel.find();
-    return result
-}
-const geSingletStudentaFromDB =async (id:string)=>{
-
-    const result = await StudentModel.findById({_id:id});
-    return result
-}
-
-export const StudentServices ={
-    geAlltStudentaFromDB,
-    geSingletStudentaFromDB
-}
+export const StudentServices = {
+  geAlltStudentaFromDB,
+  geSingletStudentaFromDB,
+};

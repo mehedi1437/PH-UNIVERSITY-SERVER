@@ -57,6 +57,7 @@ const createStudentValidationSchema = z.object({
       localGurdian: localGurdianValidationSchema,
       admissonSemester: z.string(),
       profileImg: z.string().nonempty("Profile image is required"),
+      academicDepartment:z.string(),
     }),
   }),
 });
