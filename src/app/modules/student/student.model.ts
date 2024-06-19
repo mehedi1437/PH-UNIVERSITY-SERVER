@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
 import { Gurdian, LocalGurdian, Student, UserName } from "./student.interface";
+import { boolean } from "zod";
 
 const userNameSchema = new Schema<UserName>({
   firstName: {
@@ -51,6 +52,7 @@ const studentSchema = new Schema<Student>({
   localGurdian: {type:localGurdianSchema,required:true},
   admissonSemester:{type:Schema.Types.ObjectId,required:[true,'Admisson Semester required'],ref:"AcademicSemester"},
   profileImg: { type: String, required: true },
+  isDeleted:{type:Boolean,default:false},
   academicDepartment:{type:Schema.Types.ObjectId,required:[true,'Academic Department required'],ref:"AcademicDepartment"}
 });
 
