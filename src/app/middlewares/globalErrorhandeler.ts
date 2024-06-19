@@ -4,6 +4,9 @@ import { ErrorRequestHandler } from "express";
 import { ZodError, ZodIssue } from "zod";
 import { TErrorSource } from "../interface/error.interface";
 import config from "../config";
+import handleZodError from "../errors/handleZodError";
+import handleValidationError from "../errors/handleValidationError";
+import handleCastError from "../errors/handleCastError";
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   // Sensding  Default Values
@@ -16,21 +19,6 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     },
   ];
 
-  const handleZodError = (err: ZodError) => {
-    const errorSources: TErrorSource = err.issues.map((issue: ZodIssue) => {
-      return {
-        path: issue?.path[issue?.path?.length - 1],
-        message: issue.message,
-      };
-    });
-    const statusCode = 400;
-
-    return {
-      statusCode,
-      message: " Validation  error",
-      errorSources,
-    };
-  };
 
   if (err instanceof ZodError) {
     const simplifidError = handleZodError(err);
@@ -39,12 +27,27 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     message = simplifidError?.message;
     errorSources = simplifidError?.errorSources
   }
+  else if(err?.name === 'ValidationError'){
+    const simplifiedError = handleValidationError(err);
+    statusCode = simplifiedError?.statusCode;
+
+    message = simplifiedError?.message;
+    errorSources = simplifiedError?.errorSources
+  }
+  else if(err?.name === 'CastError'){
+    const simplifiedError = handleCastError(err);
+    statusCode = simplifiedError?.statusCode;
+    message = simplifiedError?.message;
+    errorSources = simplifiedError?.errorSources
+  }
+
+  // ultimate  return
   return res.status(statusCode).json({
     success: false,
     message,
     errorSources,
-    stack:config.NODE_ENV === 'development' ? err?.stack : null
-    // error : err
+    stack:config.NODE_ENV === 'development' ? err?.stack : null,
+    //  err
   });
 };
 
