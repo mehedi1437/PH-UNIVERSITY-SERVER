@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 import { Gurdian, LocalGurdian, Student, UserName } from "./student.interface";
-import { boolean } from "zod";
+
 
 const userNameSchema = new Schema<UserName>({
   firstName: {
